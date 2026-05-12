@@ -506,19 +506,25 @@ footer { background:var(--lg-dark); color:rgba(255,255,255,0.5); padding:28px 24
             
         </div>
         
-        <div class="notice-grid">
-            
-                <div class="notice-card">
-                    <div class="notice-card-header"><span>💻</span><strong>업무용 노트북 준비</strong></div>
-                    <p>	저장매체 반입 금지 (업무용 노트북이 아닌 개인노트북, USB, SD카드, HDD/SDD등 반입 금지)</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 0;">
+            <div style="background:#fffbf0;border:1px solid #ffe08a;border-radius:14px;padding:18px 20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                    <span style="font-size:1.2rem;">💻</span>
+                    <strong style="font-size:0.9rem;color:var(--lg-accent);">업무용 노트북 준비</strong>
                 </div>
-            
-                <div class="notice-card">
-                    <div class="notice-card-header"><span>📡</span><strong>비콘 출결 준비</strong></div>
-                    <p>고용24 가입 및 출결관리 어플 설치 필수. 당일 입·퇴실 시 비콘 출결 체크를 해주세요.</p>
+                <p style="font-size:0.82rem;color:#7a5c00;line-height:1.6;margin-bottom:12px;">사내 노트북 제외 저장매체 반입 금지 (업무용 노트북이 아닌 개인노트북, USB, SD카드, HDD/SDD등 반입 금지)</p>
+                <button onclick="openLaptopModal()" style="display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:var(--lg-red);color:#fff;font-size:0.78rem;font-weight:700;border:none;border-radius:6px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">📎 방문신청 가이드(개인PC)</button>
+            </div>
+            <div style="background:#fffbf0;border:1px solid #ffe08a;border-radius:14px;padding:18px 20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                    <span style="font-size:1.2rem;">📡</span>
+                    <strong style="font-size:0.9rem;color:var(--lg-accent);">비콘 출결 준비</strong>
                 </div>
-            
+                <p style="font-size:0.82rem;color:#7a5c00;line-height:1.6;margin-bottom:12px;">고용24 가입 및 출결관리 어플 설치 필수. 당일 입·퇴실 시 비콘 출결 체크를 해주세요.</p>
+                <button onclick="openBeaconModal()" style="display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:var(--lg-red);color:#fff;font-size:0.78rem;font-weight:700;border:none;border-radius:6px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">📎 출결 가이드</button>
+            </div>
         </div>
+
     </div>
 </section><section class="timetable-section" id="timetable">
     <div class="section">
