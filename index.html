@@ -143,7 +143,79 @@ header::after {
 .contact-card .contact-info { font-size:0.86rem; color:var(--lg-gray); line-height:1.8; }
 .contact-card .contact-info a { color:var(--lg-red); text-decoration:none; font-weight:500; }
 .contact-card .contact-info a:hover { text-decoration:underline; }
+<!-- ===== 노트북 반입 팝업 ===== -->
+<div id="laptopModal" style="visibility:hidden;opacity:0;transition:opacity 0.2s;position:fixed;top:0;left:0;width:100%;height:100%;z-index:1100;display:flex;align-items:center;justify-content:center;">
+    <div onclick="closeLaptopModal()" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
+    <div style="position:relative;background:#fff;border-radius:20px;padding:36px 32px;max-width:560px;width:90%;max-height:85vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,0.2);">
+        <button onclick="closeLaptopModal()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1px solid #e0e0e0;background:#fff;font-size:1rem;cursor:pointer;color:#666;">✕</button>
+        <div style="display:inline-block;background:var(--lg-red);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.76rem;font-weight:700;letter-spacing:0.5px;margin-bottom:12px;font-family:'DM Sans',sans-serif;">💻 개인 노트북 반입 안내</div>
+        <h3 style="font-size:1.2rem;font-weight:800;color:var(--lg-dark);margin-bottom:16px;">방문신청 및 노트북 반입 가이드</h3>
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+            <a href="https://raw.githubusercontent.com/LGEHQEX/LGE_JB_AX_26-1/main/guide_visitor.pdf" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--lg-red);color:#fff;font-size:0.84rem;font-weight:700;border-radius:8px;text-decoration:none;">📎 새 창으로 보기 →</a>
+        </div>
+        <div style="border-radius:10px;overflow:hidden;border:1px solid #e8e0e0;">
+            <iframe src="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/LGEHQEX/LGE_JB_AX_26-1/main/guide_visitor.pdf&embedded=true" style="width:100%;height:440px;border:none;"></iframe>
+        </div>
+    </div>
+</div>
 
+<!-- ===== 비콘 출결 팝업 ===== -->
+<div id="beaconModal" style="visibility:hidden;opacity:0;transition:opacity 0.2s;position:fixed;top:0;left:0;width:100%;height:100%;z-index:1100;display:flex;align-items:center;justify-content:center;">
+    <div onclick="closeBeaconModal()" style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);"></div>
+    <div style="position:relative;background:#fff;border-radius:20px;padding:36px 32px;max-width:680px;width:90%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,0.2);">
+        <button onclick="closeBeaconModal()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1px solid #e0e0e0;background:#fff;font-size:1rem;cursor:pointer;color:#666;">✕</button>
+
+        <div style="display:inline-block;background:var(--lg-red);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.76rem;font-weight:700;letter-spacing:0.5px;margin-bottom:12px;font-family:'DM Sans',sans-serif;">📋 교육 사전 준비</div>
+        <h3 style="font-size:1.2rem;font-weight:800;color:var(--lg-dark);margin-bottom:4px;">① 출결 안내</h3>
+        <p style="font-size:0.88rem;color:var(--lg-red);font-weight:700;margin-bottom:24px;">· 비콘 출결 준비 필수</p>
+
+        <!-- 고용24 -->
+        <div style="border:1px solid #e8e0e0;border-radius:14px;padding:22px 20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                <span style="font-size:1.6rem;">💻</span>
+                <h4 style="font-size:1rem;font-weight:800;color:var(--lg-dark);">고용24 가입 및 어플 설치</h4>
+            </div>
+            <p style="font-size:0.86rem;color:var(--lg-gray);margin-bottom:14px;line-height:1.7;">교육참가 전 <strong>고용24 회원 가입</strong> 및 <strong>출결관리 어플</strong>을 다운로드 완료해주세요.</p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="background:#f7f7f7;border-radius:8px;padding:12px 16px;font-size:0.86rem;color:var(--lg-dark);line-height:1.6;">
+                    ① <a href="https://www.work24.go.kr" target="_blank" style="color:var(--lg-red);font-weight:600;">고용24 (https://www.work24.go.kr)</a> 개인회원 가입
+                </div>
+                <div style="background:#f7f7f7;border-radius:8px;padding:12px 16px;font-size:0.86rem;color:var(--lg-dark);line-height:1.6;">
+                    ② 회원가입 후 즉시 <strong>실명인증</strong> 진행
+                </div>
+                <div style="background:#f7f7f7;border-radius:8px;padding:12px 16px;font-size:0.86rem;color:var(--lg-dark);line-height:1.6;">
+                    ③ <strong>고용24 직업훈련 출결관리</strong> 어플 설치 후 로그인 확인
+                </div>
+            </div>
+        </div>
+
+        <!-- 비콘 출결 -->
+        <div style="border:1px solid #e8e0e0;border-radius:14px;padding:22px 20px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                <span style="font-size:1.6rem;">📡</span>
+                <h4 style="font-size:1rem;font-weight:800;color:var(--lg-dark);">교육당일 비콘(Beacon) 출결 안내</h4>
+            </div>
+            <p style="font-size:0.86rem;color:var(--lg-gray);margin-bottom:14px;line-height:1.7;">교육장 입·퇴실 시 <strong>고용24 직업훈련 출결관리</strong> 어플을 통해 반드시 입실·퇴실 체크를 해주세요.</p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="background:#f7f7f7;border-radius:8px;padding:12px 16px;font-size:0.86rem;color:var(--lg-dark);line-height:1.6;">
+                    ① 어플 실행 후 <strong>비콘 출결</strong> 클릭
+                </div>
+                <div style="background:#f7f7f7;border-radius:8px;padding:12px 16px;font-size:0.86rem;color:var(--lg-dark);line-height:1.6;">
+                    ② <strong>입실(퇴실)</strong> 버튼 클릭
+                </div>
+                <div style="background:#f7f7f7;border-radius:8px;padding:12px 16px;font-size:0.86rem;color:var(--lg-dark);line-height:1.6;">
+                    ③ 입실(퇴실) 시간 확인 후 어플 종료
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:16px;">
+                <a href="https://raw.githubusercontent.com/LGEHQEX/LGE_JB_AX_26-1/main/guide_beacon.pdf" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:#6a4c93;color:#fff;font-size:0.88rem;font-weight:700;border-radius:8px;text-decoration:none;">📎 출결 가이드 새 창으로 보기 →</a>
+            </div>
+            <div style="margin-top:16px;border-radius:10px;overflow:hidden;border:1px solid #e8e0e0;">
+                <iframe src="https://docs.google.com/viewer?url=https://raw.githubusercontent.com/LGEHQEX/LGE_JB_AX_26-1/main/guide_beacon.pdf&embedded=true" style="width:100%;height:500px;border:none;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 /* === 교육참가 확인서 === */
 .confirmation-section { background:var(--lg-light); }
 .confirmation-wrap { max-width:760px; margin:0 auto; }
