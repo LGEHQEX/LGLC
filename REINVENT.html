@@ -431,7 +431,7 @@
         <label>과제</label>
         <select id="filterTask">
           <option value="">전체</option>
-          <option value="0">① 교육 이수</option>
+          <option value="0">① People Leadership 교육</option>
           <option value="1">② Cascade W/S</option>
           <option value="2">③ 과제 정의서</option>
           <option value="3">④ 중간 우수사례</option>
@@ -546,7 +546,7 @@
         <thead>
           <tr>
             <th class="row-label" id="matrixRowLabel">본부</th>
-            <th>① 교육<br/>이수</th>
+            <th>① People<br/>Leadership</th>
             <th>② Cascade<br/>W/S</th>
             <th>③ 과제<br/>정의서</th>
             <th>④ 중간<br/>우수사례</th>
@@ -565,89 +565,90 @@
 <script>
   /* ==================== TASKS & 본부 (2026년 조직 기준) ==================== */
   const TASKS = [
-    { no: '①', name: '교육 이수' },
+    { no: '①', name: 'People Leadership 교육' },
     { no: '②', name: 'Cascade W/S' },
     { no: '③', name: '과제 정의서' },
     { no: '④', name: '중간 우수사례' },
     { no: '⑤', name: '최종 결과 보고' },
   ];
 
-  // 2026년 LG전자 조직 기준 본부명
+  // 2026년 LG전자 조직 기준 본부명 — 본부마다 잘하는/못하는 과제가 다르게
   const SAMPLE_HQS = [
-    { name: 'HS사업본부',       tasks: [96, 92, 88, 82, 68] },
-    { name: 'MS사업본부',       tasks: [94, 90, 85, 78, 62] },
-    { name: 'VS사업본부',       tasks: [92, 86, 82, 74, 58] },
-    { name: 'ES사업본부',       tasks: [90, 84, 78, 70, 55] },
-    { name: 'BS사업본부',       tasks: [88, 80, 74, 66, 50] },
-    { name: '한국영업본부',     tasks: [88, 78, 72, 64, 48] },
-    { name: '글로벌마케팅부문', tasks: [85, 76, 68, 60, 45] },
-    { name: '고객가치혁신부문', tasks: [82, 74, 65, 56, 42] },
-    { name: 'CTO부문',          tasks: [80, 70, 62, 52, 38] },
-    { name: 'CHO부문',          tasks: [68, 58, 48, 38, 25] },
+    { name: 'HS사업본부',       tasks: [96, 72, 88, 45, 78] },
+    { name: 'MS사업본부',       tasks: [82, 95, 62, 88, 35] },
+    { name: 'VS사업본부',       tasks: [78, 55, 92, 85, 68] },
+    { name: 'ES사업본부',       tasks: [94, 88, 42, 72, 65] },
+    { name: 'BS사업본부',       tasks: [62, 90, 82, 58, 85] },
+    { name: '한국영업본부',     tasks: [92, 48, 78, 95, 42] },
+    { name: '글로벌마케팅부문', tasks: [72, 85, 55, 40, 92] },
+    { name: '고객가치혁신부문', tasks: [98, 62, 75, 88, 32] },
+    { name: 'CTO부문',          tasks: [55, 78, 92, 65, 72] },
+    { name: 'CHO부문',          tasks: [85, 42, 38, 78, 58] },
   ];
 
   // 본부 → 소속 팀 샘플 데이터 (실제 업로드 시 엑셀에서 자동 추출)
+  // 각 팀도 들쭉날쭉 — 본부 평균은 비슷해도 팀별 강·약점이 다름
   const SAMPLE_TEAMS = {
     'HS사업본부': [
-      { name: 'H&A상품기획팀',   tasks: [100, 95, 92, 88, 75] },
-      { name: 'Kitchen App팀',   tasks: [98, 94, 90, 85, 72] },
-      { name: 'Living App팀',    tasks: [96, 92, 88, 80, 68] },
-      { name: 'HE영업운영팀',    tasks: [94, 90, 86, 80, 65] },
-      { name: 'HS플랫폼팀',      tasks: [92, 88, 84, 76, 60] },
+      { name: 'H&A상품기획팀',   tasks: [100, 85, 95, 60, 88] },
+      { name: 'Kitchen App팀',   tasks: [ 98, 78, 92, 48, 82] },
+      { name: 'Living App팀',    tasks: [ 96, 65, 90, 38, 78] },
+      { name: 'HE영업운영팀',    tasks: [ 94, 70, 85, 42, 75] },
+      { name: 'HS플랫폼팀',      tasks: [ 92, 62, 78, 36, 67] },
     ],
     'MS사업본부': [
-      { name: 'MC상품기획팀',    tasks: [98, 94, 90, 84, 70] },
-      { name: 'Mobile UX팀',     tasks: [96, 92, 86, 80, 65] },
-      { name: 'IT사업팀',         tasks: [94, 90, 84, 76, 60] },
-      { name: 'MS영업팀',         tasks: [90, 86, 82, 74, 55] },
+      { name: 'MC상품기획팀',    tasks: [ 92, 100, 78, 95, 52] },
+      { name: 'Mobile UX팀',     tasks: [ 88,  98, 65, 92, 40] },
+      { name: 'IT사업팀',         tasks: [ 78,  95, 55, 86, 28] },
+      { name: 'MS영업팀',         tasks: [ 70,  87, 50, 79, 20] },
     ],
     'VS사업본부': [
-      { name: 'VS상품기획팀',    tasks: [96, 90, 86, 78, 62] },
-      { name: 'Infotainment팀',  tasks: [94, 88, 84, 76, 60] },
-      { name: 'EV Component팀',  tasks: [92, 86, 82, 72, 58] },
-      { name: 'VS영업팀',         tasks: [86, 80, 76, 70, 52] },
+      { name: 'VS상품기획팀',    tasks: [ 88, 68, 100, 95, 78] },
+      { name: 'Infotainment팀',  tasks: [ 82, 60,  94, 88, 72] },
+      { name: 'EV Component팀',  tasks: [ 75, 52,  90, 82, 65] },
+      { name: 'VS영업팀',         tasks: [ 67, 40,  84, 75, 57] },
     ],
     'ES사업본부': [
-      { name: 'ES상품기획팀',    tasks: [94, 88, 82, 74, 60] },
-      { name: '시스템에어컨팀',  tasks: [92, 86, 80, 72, 58] },
-      { name: 'Chiller사업팀',   tasks: [90, 84, 78, 70, 54] },
-      { name: 'ES영업팀',         tasks: [84, 78, 72, 64, 48] },
+      { name: 'ES상품기획팀',    tasks: [100, 95, 55, 85, 75] },
+      { name: '시스템에어컨팀',  tasks: [ 96, 92, 48, 78, 70] },
+      { name: 'Chiller사업팀',   tasks: [ 92, 88, 38, 68, 62] },
+      { name: 'ES영업팀',         tasks: [ 88, 77, 27, 57, 53] },
     ],
     'BS사업본부': [
-      { name: 'BS상품기획팀',    tasks: [92, 84, 78, 70, 54] },
-      { name: 'ID사업팀',         tasks: [90, 82, 76, 68, 52] },
-      { name: 'Robot사업팀',     tasks: [88, 80, 74, 66, 50] },
-      { name: 'BS영업팀',         tasks: [82, 74, 68, 60, 44] },
+      { name: 'BS상품기획팀',    tasks: [ 75, 98, 92, 70, 95] },
+      { name: 'ID사업팀',         tasks: [ 68, 94, 88, 65, 90] },
+      { name: 'Robot사업팀',     tasks: [ 58, 90, 80, 55, 85] },
+      { name: 'BS영업팀',         tasks: [ 47, 78, 68, 42, 70] },
     ],
     '한국영업본부': [
-      { name: '리빙영업팀',       tasks: [92, 82, 76, 68, 52] },
-      { name: '키친영업팀',       tasks: [90, 80, 74, 66, 50] },
-      { name: '하이프라자운영팀', tasks: [88, 78, 72, 64, 48] },
-      { name: '온라인사업팀',     tasks: [82, 72, 66, 58, 42] },
+      { name: '리빙영업팀',       tasks: [100, 60, 90, 100, 55] },
+      { name: '키친영업팀',       tasks: [ 96, 55, 85,  98, 48] },
+      { name: '하이프라자운영팀', tasks: [ 90, 45, 78,  95, 40] },
+      { name: '온라인사업팀',     tasks: [ 82, 32, 59,  87, 25] },
     ],
     '글로벌마케팅부문': [
-      { name: 'Brand팀',          tasks: [88, 80, 72, 64, 48] },
-      { name: 'Digital MKT팀',   tasks: [86, 78, 70, 62, 46] },
-      { name: '시장조사팀',       tasks: [84, 74, 66, 58, 44] },
-      { name: 'PR팀',             tasks: [82, 72, 64, 56, 42] },
+      { name: 'Brand팀',          tasks: [ 84, 95, 68, 55, 100] },
+      { name: 'Digital MKT팀',   tasks: [ 78, 90, 60, 48,  96] },
+      { name: '시장조사팀',       tasks: [ 70, 85, 52, 38,  92] },
+      { name: 'PR팀',             tasks: [ 56, 70, 40, 19,  80] },
     ],
     '고객가치혁신부문': [
-      { name: 'CX전략팀',         tasks: [86, 78, 70, 62, 46] },
-      { name: '서비스기획팀',     tasks: [84, 76, 68, 58, 44] },
-      { name: 'VOC분석팀',        tasks: [80, 72, 62, 54, 40] },
-      { name: 'CS운영팀',         tasks: [78, 70, 60, 50, 38] },
+      { name: 'CX전략팀',         tasks: [100, 75, 90, 100, 45] },
+      { name: '서비스기획팀',     tasks: [100, 68, 82,  94, 38] },
+      { name: 'VOC분석팀',        tasks: [ 98, 58, 72,  85, 30] },
+      { name: 'CS운영팀',         tasks: [ 94, 47, 56,  73, 15] },
     ],
     'CTO부문': [
-      { name: 'SW Platform팀',   tasks: [84, 74, 66, 56, 42] },
-      { name: 'AI Lab',           tasks: [82, 72, 64, 54, 40] },
-      { name: 'Cloud Infra팀',   tasks: [80, 70, 62, 52, 38] },
-      { name: '선행기술팀',       tasks: [74, 64, 56, 46, 32] },
+      { name: 'SW Platform팀',   tasks: [ 70, 92, 100, 80, 88] },
+      { name: 'AI Lab',           tasks: [ 62, 85,  98, 72, 80] },
+      { name: 'Cloud Infra팀',   tasks: [ 52, 75,  92, 62, 70] },
+      { name: '선행기술팀',       tasks: [ 36, 60,  78, 46, 50] },
     ],
     'CHO부문': [
-      { name: 'EX&G팀',           tasks: [78, 68, 58, 48, 35] },
-      { name: 'HR기획팀',         tasks: [72, 62, 52, 42, 28] },
-      { name: '인재개발팀',       tasks: [68, 58, 48, 38, 25] },
-      { name: '조직문화팀',       tasks: [60, 50, 40, 30, 20] },
+      { name: 'EX&G팀',           tasks: [ 96, 58, 55, 92, 80] },
+      { name: 'HR기획팀',         tasks: [ 90, 48, 42, 85, 68] },
+      { name: '인재개발팀',       tasks: [ 82, 38, 32, 75, 55] },
+      { name: '조직문화팀',       tasks: [ 72, 24, 23, 60, 29] },
     ],
   };
 
@@ -790,54 +791,95 @@
   }
 
   function parseWorkbook(wb) {
-    const sheetName = wb.SheetNames.find(n => n.includes('대상자') || n.includes('명단')) || wb.SheetNames[0];
+    // 1) 대상자 명단 시트 (대시보드/사용방법 제외)
+    const sheetName = wb.SheetNames.find(n => n.includes('대상자') || n.includes('명단'))
+                   || wb.SheetNames.find(n => !n.includes('대시보드') && !n.includes('사용'))
+                   || wb.SheetNames[0];
     const ws = wb.Sheets[sheetName];
-    const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+    if (!ws) throw new Error('시트를 열 수 없음: ' + sheetName);
+    const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '', blankrows: false });
+    console.log('[Parser] 시트:', sheetName, '/ 행 수:', aoa.length);
 
+    // 2) 헤더 행 — 첫 10행에서 "본부" + "제출여부" 둘 다 포함된 행
     let headerRowIdx = -1;
-    for (let i = 0; i < Math.min(5, aoa.length); i++) {
-      const row = aoa[i].map(v => String(v || ''));
-      if (row.some(c => c === '본부') && row.some(c => c.includes('제출여부'))) {
-        headerRowIdx = i; break;
-      }
+    for (let i = 0; i < Math.min(10, aoa.length); i++) {
+      const row = (aoa[i] || []).map(v => String(v || '').trim());
+      const hasHq = row.some(c => c === '본부' || c === '소속본부' || c === '본부명' || (c.includes('본부') && c.length <= 6));
+      const hasSubmit = row.some(c => c.includes('제출여부') || c.includes('제출 여부'));
+      if (hasHq && hasSubmit) { headerRowIdx = i; break; }
     }
-    if (headerRowIdx < 0) throw new Error('헤더(본부 / 제출여부)를 찾지 못했습니다.');
+    if (headerRowIdx < 0) {
+      console.error('[Parser] 헤더 미발견. 첫 5행:', aoa.slice(0,5));
+      throw new Error('헤더 행을 찾지 못했습니다 (본부 / 제출여부 컬럼 필요)');
+    }
+    console.log('[Parser] 헤더 행 인덱스:', headerRowIdx);
 
-    const header = aoa[headerRowIdx].map(v => String(v || '').trim());
-    const idIdx  = header.findIndex(h => h.includes('사번'));
-    const hqIdx  = header.findIndex(h => h === '본부');
+    const header = (aoa[headerRowIdx] || []).map(v => String(v || '').trim());
+    const hqIdx   = header.findIndex(h => h === '본부' || h === '소속본부' || h === '본부명' || (h.includes('본부') && h.length <= 6));
+    const teamIdx = header.findIndex(h => h === '부서' || h === '팀' || h === '소속팀' || h === '소속부서' || h === '팀명' || h === '부서명');
     const submitCols = [];
-    header.forEach((h, idx) => { if (h.includes('제출여부')) submitCols.push(idx); });
-    if (submitCols.length < 5) throw new Error('"제출여부" 컬럼 5개 필요 (현재 ' + submitCols.length + '개)');
+    header.forEach((h, idx) => { if (h.includes('제출여부') || h.includes('제출 여부')) submitCols.push(idx); });
+    if (submitCols.length < 5) throw new Error('"제출여부" 컬럼이 5개 필요합니다 (현재 ' + submitCols.length + '개)');
     const taskCols = submitCols.slice(0, 5);
+    console.log('[Parser] 본부 col:', hqIdx, '부서 col:', teamIdx, '제출 cols:', taskCols);
+
+    const SUBMIT_SET = new Set(['●','o','O','○','v','V','✓','✔','Y','y','TRUE','true','제출','완료']);
+    const NEG_SET = new Set(['✖','x','X','미제출','-','FALSE','false']);
+    function classify(val) {
+      const s = String(val == null ? '' : val).trim();
+      if (s === '') return null;
+      if (SUBMIT_SET.has(s)) return true;
+      if (NEG_SET.has(s)) return false;
+      return false;
+    }
 
     const byHq = new Map();
+    const byTeam = new Map();
+    let dataRowCount = 0;
+
     for (let r = headerRowIdx + 1; r < aoa.length; r++) {
       const row = aoa[r];
       if (!row || row.length === 0) continue;
-      const id = idIdx >= 0 ? String(row[idIdx] || '').trim() : '';
       const hq = String(row[hqIdx] || '').trim();
       if (!hq) continue;
-      if (idIdx >= 0 && !id) continue;
+      const team = teamIdx >= 0 ? (String(row[teamIdx] || '').trim() || '기타') : '기타';
+      dataRowCount++;
 
       let entry = byHq.get(hq);
-      if (!entry) { entry = { name: hq, totals: [0,0,0,0,0], submitted: [0,0,0,0,0] }; byHq.set(hq, entry); }
+      if (!entry) { entry = { totals: [0,0,0,0,0], submitted: [0,0,0,0,0] }; byHq.set(hq, entry); }
+      let teamMap = byTeam.get(hq);
+      if (!teamMap) { teamMap = new Map(); byTeam.set(hq, teamMap); }
+      let tEntry = teamMap.get(team);
+      if (!tEntry) { tEntry = { totals: [0,0,0,0,0], submitted: [0,0,0,0,0] }; teamMap.set(team, tEntry); }
+
       for (let t = 0; t < 5; t++) {
-        const val = String(row[taskCols[t]] || '').trim();
-        if (val === '●' || val.toLowerCase() === 'o' || val === '제출' || val === 'TRUE' || val === '완료') {
-          entry.totals[t]++; entry.submitted[t]++;
-        } else if (val !== '') {
-          entry.totals[t]++;
-        }
+        const sub = classify(row[taskCols[t]]);
+        if (sub === null) continue;
+        entry.totals[t]++; tEntry.totals[t]++;
+        if (sub) { entry.submitted[t]++; tEntry.submitted[t]++; }
       }
     }
+    console.log('[Parser] 데이터 행:', dataRowCount, '/ 본부:', byHq.size);
+
+    const pct = (s, t) => t > 0 ? Math.round((s / t) * 100) : 0;
 
     const hqs = [];
     for (const [name, e] of byHq.entries()) {
-      const tasks = e.submitted.map((s, i) => e.totals[i] > 0 ? Math.round((s / e.totals[i]) * 100) : 0);
-      hqs.push({ name, tasks });
+      hqs.push({ name, tasks: e.submitted.map((s,i) => pct(s, e.totals[i])), _count: Math.max(...e.totals) });
     }
-    return hqs;
+    hqs.sort((a,b) => b._count - a._count);
+
+    const teamsByHq = {};
+    for (const [hqName, tm] of byTeam.entries()) {
+      const list = [];
+      for (const [tname, te] of tm.entries()) {
+        list.push({ name: tname, tasks: te.submitted.map((s,i) => pct(s, te.totals[i])), _count: Math.max(...te.totals) });
+      }
+      list.sort((a,b) => b._count - a._count);
+      teamsByHq[hqName] = list.map(t => ({ name: t.name, tasks: t.tasks }));
+    }
+
+    return { hqs: hqs.map(h => ({ name: h.name, tasks: h.tasks })), teamsByHq };
   }
 
   function handleFile(file) {
@@ -848,11 +890,13 @@
     reader.onload = (e) => {
       try {
         const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
-        const hqs = parseWorkbook(wb);
-        if (!hqs.length) { setStatus('본부 정보 없음', 'err'); return; }
-        currentHqs = hqs;
+        const parsed = parseWorkbook(wb);
+        if (!parsed.hqs.length) { setStatus('본부 정보 없음 (콘솔 확인)', 'err'); return; }
+        currentHqs = parsed.hqs;
+        currentTeams = parsed.teamsByHq;
         applyFilter();
-        setStatus(`반영 완료 · ${hqs.length}개 본부`, 'ok');
+        const teamTotal = Object.values(parsed.teamsByHq).reduce((a,b) => a + b.length, 0);
+        setStatus(`반영 완료 · 본부 ${parsed.hqs.length}개 / 팀 ${teamTotal}개`, 'ok');
       } catch (err) {
         console.error(err);
         setStatus('읽기 실패: ' + err.message, 'err');
