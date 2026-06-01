@@ -542,21 +542,35 @@ body { font-family: 'Noto Sans KR', sans-serif; background: #f2f2f2; color: var(
 
   <!-- CTA -->
   <div class="wrap fade-up" id="s-test">
-    <div class="cta-card">
+    <div class="cta-card" style="background:#1a1a1a;">
       <h3>직접 사용해 보기</h3>
       <p>아래 TEST 정보로 실제 시스템을 체험해 보세요</p>
-      <div class="cta-info">
-        <div class="cta-row">
-          <span class="l">TEST 사번</span>
-          <span class="v cta-copy" onclick="copyCtaText(this)">987654</span>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px;">
+        <div class="cta-info" style="margin-bottom:0;">
+          <div style="font-size:10px; font-weight:700; opacity:0.5; letter-spacing:0.1em; margin-bottom:6px;">ACCOUNT 1</div>
+          <div class="cta-row">
+            <span class="l">사번</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">987654</span>
+          </div>
+          <div class="cta-row">
+            <span class="l">PASSCODE</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">2580</span>
+          </div>
         </div>
-        <div class="cta-row">
-          <span class="l">PASSCODE</span>
-          <span class="v cta-copy" onclick="copyCtaText(this)">2580</span>
+        <div class="cta-info" style="margin-bottom:0;">
+          <div style="font-size:10px; font-weight:700; opacity:0.5; letter-spacing:0.1em; margin-bottom:6px;">ACCOUNT 2</div>
+          <div class="cta-row">
+            <span class="l">사번</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">123456</span>
+          </div>
+          <div class="cta-row">
+            <span class="l">PASSCODE</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">1379</span>
+          </div>
         </div>
       </div>
       <p style="font-size:11px; opacity:0.6; margin-bottom:16px;">💡 값을 탭하면 클립보드에 복사됩니다.</p>
-      <a class="cta-btn" href="https://lgehqex.github.io/learningcenter/DNT" target="_blank">
+      <a class="cta-btn" style="color:#1a1a1a;" href="https://lgehqex.github.io/learningcenter/DNT" target="_blank">
         🚀 모바일 명찰 접속하기
       </a>
     </div>
@@ -664,6 +678,45 @@ body { font-family: 'Noto Sans KR', sans-serif; background: #f2f2f2; color: var(
       </div>
     </div>
 
+    <div class="step-join"></div>
+
+    <!-- STEP 4 -->
+    <div class="step-card fade-up">
+      <div class="step-head">
+        <div class="step-num" style="background:#6b3fa0;">4</div>
+        <div class="step-htxt">버튼을 눌러 기능 확인하기</div>
+      </div>
+      <p class="step-desc">명찰 하단의 <strong>①~⑥ 버튼</strong>을 눌러 각 기능을 직접 확인해 보세요. 사전안내문·설문·식권·러닝센터 시설안내·실습관련 IT 문의·대강당 출결 기능을 한 페이지에서 모두 이용할 수 있습니다.</p>
+      <div class="step-tip">💡 <strong>기능 안내 및 색상 테마</strong> 탭에서 각 버튼의 상세 기능 설명을 확인할 수 있습니다.</div>
+      <!-- 버튼 번호 요약 -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; align-items:center; gap:10px; background:#f9f9f9; border-radius:8px; padding:10px 14px;">
+          <span style="width:24px;height:24px;border-radius:50%;background:#A50034;color:white;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>
+          <span style="font-size:13px; font-weight:600;">사전안내문 — 교육 과정 안내사항 확인</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#f9f9f9; border-radius:8px; padding:10px 14px;">
+          <span style="width:24px;height:24px;border-radius:50%;background:#1a5dbf;color:white;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>
+          <span style="font-size:13px; font-weight:600;">설문 — 교육 만족도 설문 참여</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#f9f9f9; border-radius:8px; padding:10px 14px;">
+          <span style="width:24px;height:24px;border-radius:50%;background:#c75000;color:white;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>
+          <span style="font-size:13px; font-weight:600;">식권 — 식당 이용을 위한 모바일 식권</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#f9f9f9; border-radius:8px; padding:10px 14px;">
+          <span style="width:24px;height:24px;border-radius:50%;background:#1a7a4a;color:white;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">4</span>
+          <span style="font-size:13px; font-weight:600;">러닝센터 시설안내 — 시설 이용 안내</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#f9f9f9; border-radius:8px; padding:10px 14px;">
+          <span style="width:24px;height:24px;border-radius:50%;background:#1a5dbf;color:white;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">5</span>
+          <span style="font-size:13px; font-weight:600;">실습관련 IT 문의 — 실습 계정 제공 과정에서 활성화</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#f9f9f9; border-radius:8px; padding:10px 14px;">
+          <span style="width:24px;height:24px;border-radius:50%;background:#555;color:white;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">6</span>
+          <span style="font-size:13px; font-weight:600;">대강당 출결 — PASSCODE 입력으로 출결 확인</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div><!-- /panel-2 -->
@@ -674,12 +727,6 @@ body { font-family: 'Noto Sans KR', sans-serif; background: #f2f2f2; color: var(
 </div>
 
 <script>
-/* ── TAB GROUP ── */
-function switchGroup(idx, btn) {
-  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
-  document.querySelectorAll('.tg-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
-  window.scrollTo({top: document.querySelector('.tab-group-nav').offsetTop - 1, behavior:'smooth'});
-}
 
 
 /* ── PASSCODE ── */
@@ -695,7 +742,7 @@ function updatePc() {
   [0,1,2,3].forEach(i => document.getElementById('d'+i).classList.toggle('filled', i < pc.length));
 }
 function ks() {
-  if (pc === '2580') { showSuccess(); return; }
+  if (pc === '2580' || pc === '1379') { showSuccess(); return; }
   if (pc.length === 4) {
     const d = document.getElementById('pcDisplay');
     d.style.color = '#c00';
@@ -784,24 +831,13 @@ function closeBtnPopup() {
   }, 220);
 }
 
-/* ── ACCORDION ── */
-function toggleFeat(el) { el.classList.toggle('open'); }
+/* ── TAB GROUP ── */
+function switchGroup(idx, btn) {
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tg-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  window.scrollTo({top: document.querySelector('.tab-group-nav').offsetTop - 1, behavior:'smooth'});
+}
 
-/* ── SUB PILL 스크롤 하이라이트 ── */
-const groupSections = [
-  ['s-bg','s-ba','s-arch'],
-  ['s-btns','s-theme'],
-  ['s-test','s-how']
-];
-window.addEventListener('scroll', () => {
-  const activePanel = [...document.querySelectorAll('.tab-panel')].findIndex(p => p.classList.contains('active'));
-  if (activePanel < 0) return;
-  const ids = groupSections[activePanel];
-  let cur = 0;
-  ids.forEach((id,i) => {
-    const el = document.getElementById(id);
-    if (el && el.getBoundingClientRect().top < 140) cur = i;
-  });
 </script>
 </body>
 </html>
