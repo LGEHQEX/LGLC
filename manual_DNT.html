@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모바일 명찰 시스템 — 사용 안내</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #A50034; --red-d: #7a0026;
+  --blue: #1a5dbf; --green: #1a7a4a;
+  --purple: #6b3fa0; --orange: #c75000;
+  --g50: #f9f9f9; --g100: #f0f0f0; --g200: #e2e2e2;
+  --g400: #999; --g500: #777; --g700: #444; --g900: #111;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; background: #f2f2f2; color: var(--g900); }
+
+/* ── HERO ── */
+.hero {
+  background: var(--red); color: white;
+  padding: 52px 24px 44px; position: relative; overflow: hidden;
+}
+.hero::before { content:''; position:absolute; right:-60px; top:-60px; width:300px; height:300px; border-radius:50%; background:rgba(255,255,255,0.05); }
+.hero::after  { content:''; position:absolute; right:40px; bottom:-40px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); }
+.hero-badge { display:inline-block; font-size:10px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; opacity:.7; border:1px solid rgba(255,255,255,.3); padding:4px 10px; border-radius:20px; margin-bottom:14px; }
+.hero h1 { font-size:30px; font-weight:900; line-height:1.25; margin-bottom:8px; }
+.hero-desc { font-size:13px; opacity:.8; line-height:1.7; margin-bottom:24px; }
+.hero-url-box { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); border-radius:10px; padding:12px 14px; }
+.hero-url-box .url-label { font-size:10px; opacity:.6; white-space:nowrap; }
+.hero-url-box a { font-family:'DM Mono',monospace; font-size:11px; color:white; text-decoration:none; word-break:break-all; flex:1; }
+.hero-url-box a:hover { text-decoration:underline; }
+
+/* ── TAB GROUP NAV ── */
+.tab-group-nav {
+  display: flex; background: white;
+  border-bottom: 2px solid var(--g200);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow-x: auto; scrollbar-width: none;
+}
+.tab-group-nav::-webkit-scrollbar { display: none; }
+.tg-btn {
+  flex: 1; border: none; background: none; cursor: pointer;
+  padding: 13px 8px 11px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px; font-weight: 700; color: var(--g400);
+  border-bottom: 3px solid transparent; margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap; line-height: 1;
+}
+.tg-btn.active { color: var(--red); border-bottom-color: var(--red); }
+.tg-btn:hover { color: var(--g700); }
+
+
+
+/* ── TAB PANELS ── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── SHARED SECTION ── */
+.wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px; }
+.section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--red); display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+}
+.section-label::after { content:''; flex:1; height:1px; background:var(--g200); }
+
+/* ── CARDS ── */
+.white-card { background: white; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,.06); overflow: hidden; }
+.arch-card { background:white; border-radius:14px; padding:18px; box-shadow:0 2px 10px rgba(0,0,0,.05); display:flex; gap:14px; align-items:flex-start; }
+.arch-icon-box { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.arch-title { font-size:14px; font-weight:700; margin-bottom:4px; }
+.arch-chip { display:inline-block; font-size:9px; font-weight:700; letter-spacing:.08em; padding:2px 7px; border-radius:4px; color:white; margin-bottom:6px; }
+.arch-desc { font-size:12px; color:var(--g500); line-height:1.7; }
+.arch-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+.arch-tag { font-size:10px; padding:3px 8px; border-radius:5px; background:var(--g100); color:var(--g700); font-weight:600; }
+
+/* ── TEST INFO ── */
+.info-row { display:flex; align-items:center; gap:12px; padding:14px 18px; border-bottom:1px solid var(--g100); }
+.info-row:last-child { border-bottom:none; }
+.info-lbl { font-size:11px; font-weight:600; color:var(--g400); min-width:90px; }
+.info-val { font-family:'DM Mono',monospace; font-size:15px; font-weight:500; background:var(--g50); padding:6px 12px; border-radius:7px; flex:1; cursor:pointer; user-select:all; transition:background .15s; }
+.info-val:hover { background:var(--g100); }
+
+/* ── STEP FLOW ── */
+.step-card { background:white; border-radius:16px; padding:22px 20px; box-shadow:0 2px 12px rgba(0,0,0,.06); }
+.step-join { width:2px; height:14px; background:var(--g200); margin:0 0 0 15px; }
+.step-head { display:flex; align-items:flex-start; gap:14px; margin-bottom:12px; }
+.step-num { width:32px; height:32px; border-radius:50%; background:var(--red); color:white; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-num.b { background:var(--blue); }
+.step-num.g { background:var(--green); }
+.step-htxt { font-size:15px; font-weight:700; margin-top:5px; }
+.step-desc { font-size:13px; color:var(--g500); line-height:1.75; margin-bottom:18px; }
+.step-tip { background:#fff8e1; border-left:3px solid #f4b400; border-radius:0 8px 8px 0; padding:10px 12px; font-size:12px; color:#5a4000; line-height:1.6; margin-bottom:16px; }
+
+/* ── PHONE MOCK ── */
+.phone { background:#1a1a1a; border-radius:20px; padding:6px; box-shadow:0 10px 40px rgba(0,0,0,.22); max-width:230px; margin:0 auto; }
+.screen { background:white; border-radius:15px; overflow:hidden; }
+.bm-red    { background:#A50034; }
+.bm-blue   { background:#1a5dbf; }
+.bm-green  { background:#1a7a4a; }
+.bm-purple { background:#6b3fa0; }
+.bm-header { padding:14px; color:white; }
+.bm-top { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.bm-logo { width:26px; height:26px; background:white; border-radius:4px; font-size:8px; font-weight:900; color:var(--red); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.bm-pgm { font-size:11px; font-weight:700; }
+.bm-sub { font-size:9px; opacity:.8; }
+.bm-chip { margin-left:auto; font-size:9px; padding:2px 7px; background:rgba(255,255,255,.22); border-radius:4px; }
+.bm-role { font-size:17px; font-weight:900; margin-bottom:6px; }
+.bm-info { font-size:10px; line-height:2; opacity:.9; }
+.bm-info span { opacity:.6; margin-right:6px; }
+.bm-btns { display:grid; grid-template-columns:1fr 1fr; gap:5px; padding:8px; background:white; }
+.bm-btn { background:#f4f4f4; border-radius:8px; padding:8px 2px; font-size:9px; font-weight:700; color:#333; display:flex; align-items:center; justify-content:center; gap:4px; }
+.bm-attend { margin:0 8px 8px; background:#f0f0f0; border-radius:8px; padding:9px; font-size:10px; font-weight:700; color:var(--red); text-align:center; cursor:pointer; }
+
+/* ── PASSCODE MOCK ── */
+.pc-wrap { padding:16px 12px; }
+.pc-title { font-size:12px; font-weight:700; text-align:center; margin-bottom:3px; }
+.pc-sub { font-size:10px; color:#888; text-align:center; margin-bottom:12px; }
+.pc-dots { display:flex; justify-content:center; gap:8px; margin-bottom:10px; }
+.pc-dot { width:10px; height:10px; border-radius:50%; background:var(--g200); transition:background .15s; }
+.pc-dot.filled { background:var(--g900); }
+.pc-display { font-family:'DM Mono',monospace; font-size:26px; font-weight:500; text-align:center; letter-spacing:.25em; border-bottom:2px solid var(--g200); padding-bottom:8px; margin-bottom:12px; min-height:42px; }
+.keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; }
+.key { background:var(--g100); border:none; border-radius:8px; padding:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:'DM Mono',monospace; color:var(--g900); transition:background .1s, transform .08s; }
+.key:active { background:var(--g200); transform:scale(.94); }
+.key.z { grid-column:2; }
+.key.del { font-size:15px; color:var(--g400); }
+.kp-submit { margin-top:8px; width:100%; background:var(--red); color:white; border:none; border-radius:8px; padding:11px; font-size:12px; font-weight:700; font-family:'Noto Sans KR',sans-serif; cursor:pointer; }
+
+/* ── SUCCESS MOCK ── */
+.suc-wrap { padding:28px 16px; text-align:center; }
+.suc-icon { width:56px; height:56px; background:#e8f5ee; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 12px; animation:pop .4s ease; }
+@keyframes pop { 0%{transform:scale(0);opacity:0} 70%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+.suc-title { font-size:13px; font-weight:700; color:var(--green); margin-bottom:4px; }
+.suc-time { font-family:'DM Mono',monospace; font-size:11px; color:var(--g400); margin-bottom:14px; }
+.suc-badge { display:inline-flex; align-items:center; gap:6px; background:var(--green); color:white; border-radius:20px; padding:5px 14px; font-size:11px; font-weight:700; }
+.suc-wait { padding:36px 16px; text-align:center; color:#bbb; font-size:11px; }
+
+/* ── BUTTON FEATURE ACCORDION ── */
+.btn-feat { background:white; border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+.btn-feat-header { display:flex; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; user-select:none; }
+.btn-feat-num { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:white; flex-shrink:0; }
+.btn-feat-title { font-size:14px; font-weight:700; }
+.btn-feat-arrow { margin-left:auto; font-size:12px; color:var(--g400); transition:transform .2s; }
+.btn-feat.open .btn-feat-arrow { transform:rotate(180deg); }
+.btn-feat-body { padding:0 18px 16px 58px; display:none; font-size:13px; color:var(--g500); line-height:1.8; }
+.btn-feat.open .btn-feat-body { display:block; }
+.feat-chip { display:inline-block; font-size:10px; font-weight:600; padding:2px 8px; border-radius:4px; margin-bottom:8px; color:white; }
+
+/* ── COLOR THEMES ── */
+.theme-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.theme-card { border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.08); }
+.theme-header { padding:14px; color:white; }
+.theme-logo-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.theme-logo { width:22px; height:22px; background:rgba(255,255,255,.9); border-radius:3px; font-size:7px; font-weight:900; display:flex; align-items:center; justify-content:center; }
+.theme-pgm { font-size:9px; font-weight:700; }
+.theme-name { font-size:14px; font-weight:900; margin-bottom:2px; }
+.theme-dept { font-size:9px; opacity:.8; }
+.theme-footer { background:white; padding:8px 10px; display:flex; gap:4px; }
+.theme-mini-btn { flex:1; background:#f4f4f4; border-radius:5px; font-size:8px; font-weight:600; padding:5px 2px; text-align:center; color:#333; }
+
+/* ── BEFORE/AFTER ── */
+.ba-table { background:white; border-radius:14px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.06); }
+.ba-head { display:grid; grid-template-columns:1fr 1fr; }
+.ba-head-cell { padding:12px 16px; font-size:12px; font-weight:700; text-align:center; color:white; }
+.ba-head-before { background:#c0392b; }
+.ba-head-after  { background:var(--green); }
+.ba-row { display:grid; grid-template-columns:1fr auto 1fr; border-top:1px solid var(--g100); }
+.ba-cell { padding:12px 14px; font-size:12px; line-height:1.5; }
+.ba-cell.before { color:#c0392b; }
+.ba-cell.after  { color:var(--green); }
+.ba-arrow { padding:12px 4px; display:flex; align-items:center; color:var(--g400); font-size:12px; }
+
+/* ── KPI ── */
+.kpi-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:14px; }
+.kpi-card { background:white; border-radius:12px; padding:14px 8px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+.kpi-val { font-size:20px; font-weight:900; }
+.kpi-lbl { font-size:10px; color:var(--g500); margin-top:4px; line-height:1.4; }
+
+/* ── CTA ── */
+.cta-card { background:var(--red); color:white; border-radius:18px; padding:28px 22px; text-align:center; }
+.cta-card h3 { font-size:20px; font-weight:900; margin-bottom:6px; }
+.cta-card p { font-size:13px; opacity:.8; margin-bottom:22px; }
+.cta-info { background:rgba(255,255,255,.12); border-radius:10px; padding:14px 16px; margin-bottom:16px; text-align:left; display:flex; flex-direction:column; gap:8px; }
+.cta-row { display:flex; gap:8px; font-size:13px; }
+.cta-row .l { opacity:.65; min-width:70px; font-size:11px; }
+.cta-row .v { font-family:'DM Mono',monospace; font-weight:500; }
+.cta-copy { cursor:pointer; background:rgba(255,255,255,.15); padding:4px 10px; border-radius:6px; transition:background .15s; user-select:all; }
+.cta-copy:hover { background:rgba(255,255,255,.28); }
+.cta-btn { display:block; background:white; color:var(--red); border-radius:11px; padding:15px; font-size:14px; font-weight:700; text-decoration:none; font-family:'Noto Sans KR',sans-serif; transition:transform .15s, box-shadow .15s; }
+.cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.2); }
+
+/* ── FOOTER ── */
+.footer { text-align:center; padding:20px 20px 40px; font-size:11px; color:var(--g400); line-height:1.8; }
+.footer strong { color:var(--g700); }
+
+/* ── ANIM ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.fade-up { animation:fadeUp .35s ease both; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">LG Electronics · 교육서비스센터</div>
+  <h1>모바일 명찰 시스템 안내</h1>
+  <p class="hero-desc">모바일 명찰 시스템 사용 가이드입니다.</p>
+  <div class="hero-url-box">
+    <span class="url-label">접속 URL</span>
+    <a href="https://lgehqex.github.io/learningcenter/DNT" target="_blank">
+      https://lgehqex.github.io/learningcenter/DNT
+    </a>
+  </div>
+</div>
+
+<!-- 버튼 기능 팝업 모달 — 패널 밖 전역 -->
+<div id="btnPopupOverlay" onclick="closeBtnPopup()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; backdrop-filter:blur(3px);"></div>
+<div id="btnPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.9); width:calc(100% - 48px); max-width:400px; background:white; border-radius:20px; z-index:201; padding:0 0 8px; box-shadow:0 24px 60px rgba(0,0,0,0.25); opacity:0; transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1), opacity 0.18s ease;">
+  <div id="btnPopupContent" style="padding:24px 24px 16px;"></div>
+</div>
+
+<!-- ══ 탭 그룹 네비 ══ -->
+<div class="tab-group-nav">
+  <button class="tg-btn active" onclick="switchGroup(0, this)">📋 도입 배경 및 효과</button>
+  <button class="tg-btn"        onclick="switchGroup(1, this)">🔘 기능 안내 및 색상 테마</button>
+  <button class="tg-btn"        onclick="switchGroup(2, this)">🚀 사용 방법 및 TEST</button>
+</div>
+
+<!-- ════════════════════════════════════════
+     PANEL 0 : 도입 배경 · 도입 효과 · 시스템 구성
+════════════════════════════════════════ -->
+<div class="tab-panel active" id="panel-0">
+
+  <!-- 서브 탭 -->
+
+  <!-- 도입 배경 -->
+  <div class="wrap fade-up" id="s-bg">
+    <div class="section-label">도입 배경</div>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+
+      <div class="arch-card">
+        <div class="arch-icon-box" style="background:#fdecea;">🖨️</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:var(--red);color:white;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+            <div class="arch-title">사전 인쇄의 한계</div>
+          </div>
+          <div class="arch-desc">당일 불참·변경 시 이미 인쇄된 명찰을 수정할 수 없어, 변경마다 재인쇄를 반복해야 했습니다.</div>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon-box" style="background:#fff8e1;">💸</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:var(--red);color:white;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+            <div class="arch-title">소모품 비용 지속 발생</div>
+          </div>
+          <div class="arch-desc">명찰 외피(홀더)가 반복 사용으로 파손되어 매 기수마다 재구매가 필요했습니다.</div>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon-box" style="background:#e8f5e9;">⏱️</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:var(--red);color:white;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+            <div class="arch-title">운영 자원 낭비</div>
+          </div>
+          <div class="arch-desc">출력·코팅·분류·배부·회수에 인력이 집중되고, 수기 출결로 인한 오기·누락 위험이 상존했습니다.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 도입 효과 -->
+  <div class="wrap" id="s-ba" style="padding-top:0;">
+    <div class="section-label">도입 효과 — Before / After</div>
+
+    <div class="ba-table">
+      <div class="ba-head">
+        <div class="ba-head-cell ba-head-before">❌ 도입 전</div>
+        <div class="ba-head-cell ba-head-after">✅ 도입 후</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before">사전 인쇄 → 불참 시 수정 불가</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-cell after">사번 조회 즉시 최신 정보 반영</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before">변경마다 재인쇄 반복</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-cell after">Sheet 수정만으로 즉시 완료</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before">명찰 외피 파손 → 매 기수 재구매</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-cell after">소모품 구매 불필요 (비용 Zero)</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before">안내문·설문 별도 링크 배포</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-cell after">명찰 한 페이지에서 원스톱 접근</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before">수기 출결 → 오기·누락 위험</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-cell after">PASSCODE 입력 → Sheet 자동 기록</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before">교육 당일부터 정보 확인 가능</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-cell after">교육 전 사전 정보 확인 가능</div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-val" style="color:var(--red);">Free</div>
+        <div class="kpi-lbl">명찰 인쇄비<br>외피 소모품비</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val" style="color:var(--blue);">Live</div>
+        <div class="kpi-lbl">불참·변경<br>실시간 반영</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val" style="color:var(--green); font-size:15px;">All-in-One</div>
+        <div class="kpi-lbl">페이지 하나로<br>출결+안내+설문</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시스템 구성 -->
+  <div class="wrap" id="s-arch" style="padding-top:0;">
+    <div class="section-label">시스템 구성</div>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+
+      <div class="arch-card">
+        <div class="arch-icon-box" style="background:#e8f5e9;">📊</div>
+        <div>
+          <div class="arch-chip" style="background:var(--green);">DATA SOURCE</div>
+          <div class="arch-title">Google Sheets</div>
+          <div class="arch-desc">교육 참가자 DB (사번·성명·직급·소속·반/팀·장소)와 출결 시간 컬럼을 관리합니다.</div>
+          <div class="arch-tags">
+            <span class="arch-tag">사번·성명·직급</span><span class="arch-tag">반/팀 배정</span>
+            <span class="arch-tag">출결 시간 기록</span><span class="arch-tag">PASSCODE 관리</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon-box" style="background:#e3f2fd;">⚙️</div>
+        <div>
+          <div class="arch-chip" style="background:var(--blue);">BACKEND</div>
+          <div class="arch-title">Google Apps Script</div>
+          <div class="arch-desc">Web App API로 배포되어 사번 조회 요청을 처리하고, 출결 시간을 Sheet에 자동 기록합니다.</div>
+          <div class="arch-tags">
+            <span class="arch-tag">JSON API 배포</span><span class="arch-tag">사번 조회</span>
+            <span class="arch-tag">출결 자동 기록</span><span class="arch-tag">서버 비용 Zero</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon-box" style="background:#fce4ec;">🌐</div>
+        <div>
+          <div class="arch-chip" style="background:var(--red);">FRONTEND</div>
+          <div class="arch-title">GitHub Pages</div>
+          <div class="arch-desc">단일 HTML 파일로 배포. 앱 설치 없이 URL 접속만으로 사용 가능하며 유지비가 없습니다.</div>
+          <div class="arch-tags">
+            <span class="arch-tag">앱 설치 불필요</span><span class="arch-tag">모바일 최적화</span>
+            <span class="arch-tag">유지비 Zero</span><span class="arch-tag">단일 HTML 파일</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div style="margin-top:12px; background:white; border-radius:12px; padding:14px 16px; font-size:12px; color:var(--g500); line-height:1.8; box-shadow:0 1px 6px rgba(0,0,0,.05);">
+      💡 <strong style="color:var(--g700);">운영 흐름</strong><br>
+      참가자 사번 입력 → Apps Script API 호출 → Google Sheet 조회 → 명찰 정보 표시<br>
+      대강당 PASSCODE 입력 → Apps Script → Sheet T열에 출결 시간 자동 기록
+    </div>
+  </div>
+
+</div><!-- /panel-0 -->
+
+
+<!-- ════════════════════════════════════════
+     PANEL 1 : 버튼별 기능 안내 · 소속별 색상 테마
+════════════════════════════════════════ -->
+<div class="tab-panel" id="panel-1">
+
+  <!-- 버튼 기능 -->
+  <div class="wrap fade-up" id="s-btns">
+    <div class="section-label">버튼별 기능 안내</div>
+
+    <!-- 명찰 미리보기 — 버튼 클릭 가능 -->
+    <div style="margin-bottom:8px;">
+      <p style="font-size:12px; color:var(--g500); margin-bottom:12px; line-height:1.6;">사번을 입력하면 아래와 같은 명찰 화면이 표시됩니다. <strong style="color:var(--red);">각 버튼을 탭해</strong> 기능을 확인하세요.</p>
+      <div style="background:#1a1a1a; border-radius:32px; padding:10px; box-shadow:0 10px 40px rgba(0,0,0,0.22); max-width:460px; margin:0 auto;">
+        <div style="background:white; border-radius:22px; overflow:hidden;">
+
+          <!-- ⑤ 대강당 출결 — 상단 독립 플로팅 -->
+          <div style="padding:12px 16px 6px; background:white; display:flex; align-items:center; justify-content:space-between;">
+            <div onclick="openBtnPopup(5)" style="display:inline-flex;align-items:center;gap:8px;background:#f0f0f0;border-radius:20px;padding:8px 18px;font-size:14px;font-weight:700;color:#333;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#ffe5ea'" onmouseout="this.style.background='#f0f0f0'">
+              <span style="width:22px;height:22px;border-radius:50%;background:#555;color:white;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;">6</span>
+              🏛️ 대강당 출결
+            </div>
+          </div>
+
+          <!-- 명찰 헤더 -->
+          <div style="background:#A50034; padding:28px; color:white;">
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+              <div style="width:48px;height:48px;background:white;border-radius:8px;font-size:14px;font-weight:900;color:#A50034;display:flex;align-items:center;justify-content:center;flex-shrink:0;">LG</div>
+              <div>
+                <div style="font-size:18px;font-weight:700;">모바일 명찰 TEST</div>
+                <div style="font-size:14px;opacity:.8;">1차</div>
+              </div>
+              <div style="margin-left:auto;font-size:14px;padding:4px 12px;background:rgba(255,255,255,.22);border-radius:6px;">교육생</div>
+            </div>
+            <div style="font-size:30px;font-weight:900;margin-bottom:10px;">교육생</div>
+            <div style="font-size:16px;line-height:2.2;opacity:.9;">
+              <span style="opacity:.6;margin-right:10px;">직급</span>책임<br>
+              <span style="opacity:.6;margin-right:10px;">소속</span>EXG팀<br>
+              <span style="opacity:.6;margin-right:10px;">반/팀</span>O반 O팀
+            </div>
+          </div>
+
+          <!-- ①~④ 버튼 4개 -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 16px 10px;background:white;">
+            <div onclick="openBtnPopup(1)" style="background:#f4f4f4;border-radius:8px;padding:16px 8px;font-size:15px;font-weight:700;color:#333;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#ffe5ea'" onmouseout="this.style.background='#f4f4f4'">
+              <span style="width:24px;height:24px;border-radius:50%;background:#A50034;color:white;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>사전안내문
+            </div>
+            <div onclick="openBtnPopup(2)" style="background:#f4f4f4;border-radius:8px;padding:16px 8px;font-size:15px;font-weight:700;color:#333;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#e8f0ff'" onmouseout="this.style.background='#f4f4f4'">
+              <span style="width:24px;height:24px;border-radius:50%;background:#1a5dbf;color:white;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>설문
+            </div>
+            <div onclick="openBtnPopup(3)" style="background:#f4f4f4;border-radius:8px;padding:16px 8px;font-size:15px;font-weight:700;color:#333;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#fff0e8'" onmouseout="this.style.background='#f4f4f4'">
+              <span style="width:24px;height:24px;border-radius:50%;background:#c75000;color:white;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>식권
+            </div>
+            <div onclick="openBtnPopup(4)" style="background:#f4f4f4;border-radius:8px;padding:16px 8px;font-size:15px;font-weight:700;color:#333;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#e8f5ee'" onmouseout="this.style.background='#f4f4f4'">
+              <span style="width:24px;height:24px;border-radius:50%;background:#1a7a4a;color:white;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">4</span>러닝센터 시설안내
+            </div>
+          </div>
+
+          <!-- 실습 로그인 정보 박스 -->
+          <div style="margin:0 16px 10px;background:#fff5f7;border:1px solid #f8d0da;border-radius:10px;padding:12px 16px;">
+            <div style="font-size:11px;font-weight:700;color:#A50034;margin-bottom:8px;">🔐 학습 사이트 로그인 정보</div>
+            <div style="display:flex;gap:12px;align-items:center;margin-bottom:4px;">
+              <span style="font-size:12px;font-weight:700;color:#A50034;min-width:24px;">ID</span>
+              <span style="font-family:'DM Mono',monospace;font-size:13px;color:#333;">user00@lgelc.com</span>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;">
+              <span style="font-size:12px;font-weight:700;color:#A50034;min-width:24px;">PW</span>
+              <span style="font-family:'DM Mono',monospace;font-size:13px;color:#333;">lgelc12345!</span>
+            </div>
+          </div>
+
+          <!-- 실습관련 IT 문의 버튼 -->
+          <div onclick="openBtnPopup(6)" style="margin:0 16px 16px;background:#f0f4ff;border-radius:10px;padding:14px;font-size:14px;font-weight:700;color:#1a5dbf;text-align:center;cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px;" onmouseover="this.style.background='#dce8ff'" onmouseout="this.style.background='#f0f4ff'">
+            <span style="width:24px;height:24px;border-radius:50%;background:#1a5dbf;color:white;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">5</span>
+            💻 실습관련 IT 문의
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 색상 테마 -->
+  <div class="wrap" id="s-theme" style="padding-top:0;">
+    <div class="section-label">소속별 색상 테마</div>
+    <p style="font-size:13px; color:var(--g500); margin-bottom:16px; line-height:1.7;">교육 주관 구분에 따라 명찰 배경 색상이 자동으로 달라집니다.</p>
+    <div class="theme-grid">
+
+      <div class="theme-card">
+        <div class="theme-header bm-red">
+          <div class="theme-logo-row"><div class="theme-logo" style="color:var(--red);">LG</div><div class="theme-pgm">모바일 명찰 TEST</div></div>
+          <div class="theme-name">홍길동</div>
+          <div class="theme-dept">본사 · HR전략팀</div>
+        </div>
+        <div class="theme-footer">
+          <div class="theme-mini-btn">📄</div><div class="theme-mini-btn">📝</div>
+          <div class="theme-mini-btn">🍱</div><div class="theme-mini-btn">🏢</div>
+        </div>
+        <div style="padding:6px 10px 8px; font-size:10px; font-weight:700; color:var(--red); text-align:center;">🔴 본사</div>
+      </div>
+
+      <div class="theme-card">
+        <div class="theme-header bm-blue">
+          <div class="theme-logo-row"><div class="theme-logo" style="color:var(--blue);">LG</div><div class="theme-pgm">모바일 명찰 TEST</div></div>
+          <div class="theme-name">김철수</div>
+          <div class="theme-dept">아카데미 · 교육운영팀</div>
+        </div>
+        <div class="theme-footer">
+          <div class="theme-mini-btn">📄</div><div class="theme-mini-btn">📝</div>
+          <div class="theme-mini-btn">🍱</div><div class="theme-mini-btn">🏢</div>
+        </div>
+        <div style="padding:6px 10px 8px; font-size:10px; font-weight:700; color:var(--blue); text-align:center;">🔵 아카데미</div>
+      </div>
+
+      <div class="theme-card">
+        <div class="theme-header bm-green">
+          <div class="theme-logo-row"><div class="theme-logo" style="color:var(--green);">LG</div><div class="theme-pgm">모바일 명찰 TEST</div></div>
+          <div class="theme-name">이영희</div>
+          <div class="theme-dept">임대사 · 운영팀</div>
+        </div>
+        <div class="theme-footer">
+          <div class="theme-mini-btn">📄</div><div class="theme-mini-btn">📝</div>
+          <div class="theme-mini-btn">🍱</div><div class="theme-mini-btn">🏢</div>
+        </div>
+        <div style="padding:6px 10px 8px; font-size:10px; font-weight:700; color:var(--green); text-align:center;">🟢 임대사</div>
+      </div>
+
+      <div class="theme-card">
+        <div class="theme-header bm-purple">
+          <div class="theme-logo-row"><div class="theme-logo" style="color:var(--purple);">LG</div><div class="theme-pgm">모바일 명찰 TEST</div></div>
+          <div class="theme-name">박민준</div>
+          <div class="theme-dept">세일즈 · 영업기획팀</div>
+        </div>
+        <div class="theme-footer">
+          <div class="theme-mini-btn">📄</div><div class="theme-mini-btn">📝</div>
+          <div class="theme-mini-btn">🍱</div><div class="theme-mini-btn">🏢</div>
+        </div>
+        <div style="padding:6px 10px 8px; font-size:10px; font-weight:700; color:var(--purple); text-align:center;">🟣 세일즈</div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /panel-1 -->
+
+
+<!-- ════════════════════════════════════════
+     PANEL 2 : 사용 방법 · TEST
+════════════════════════════════════════ -->
+<div class="tab-panel" id="panel-2">
+
+  <!-- CTA -->
+  <div class="wrap fade-up" id="s-test">
+    <div class="cta-card">
+      <h3>직접 사용해 보기</h3>
+      <p>아래 TEST 정보로 실제 시스템을 체험해 보세요</p>
+      <div class="cta-info">
+        <div class="cta-row">
+          <span class="l">TEST 사번</span>
+          <span class="v cta-copy" onclick="copyCtaText(this)">987654</span>
+        </div>
+        <div class="cta-row">
+          <span class="l">PASSCODE</span>
+          <span class="v cta-copy" onclick="copyCtaText(this)">2580</span>
+        </div>
+      </div>
+      <p style="font-size:11px; opacity:0.6; margin-bottom:16px;">💡 값을 탭하면 클립보드에 복사됩니다.</p>
+      <a class="cta-btn" href="https://lgehqex.github.io/learningcenter/DNT" target="_blank">
+        🚀 모바일 명찰 접속하기
+      </a>
+    </div>
+  </div>
+
+  <!-- 사용 방법 -->
+  <div class="wrap" id="s-how" style="padding-top:0;">
+    <div class="section-label">사용 방법 — 3단계</div>
+
+    <!-- STEP 1 -->
+    <div class="step-card fade-up">
+      <div class="step-head">
+        <div class="step-num">1</div>
+        <div class="step-htxt">사번 입력 → 명찰 확인</div>
+      </div>
+      <p class="step-desc">접속 URL에서 본인의 <strong>사번을 입력</strong>하면 이름·소속·반/팀이 자동으로 불러와집니다. 사전안내문·설문·식권·러닝센터 안내 버튼도 한 화면에서 확인할 수 있습니다.</p>
+      <div class="step-tip">📌 사전에 접속해 정보를 미리 확인해 두면 교육 당일이 더 편리합니다.</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="bm-header bm-red">
+            <div class="bm-top">
+              <div class="bm-logo">LG</div>
+              <div><div class="bm-pgm">모바일 명찰 TEST</div><div class="bm-sub">1차</div></div>
+              <div class="bm-chip">교육생</div>
+            </div>
+            <div class="bm-role">교육생</div>
+            <div class="bm-info">
+              <span>직급</span>책임<br>
+              <span>소속</span>EXG팀<br>
+              <span>반/팀</span>O반 O팀
+            </div>
+          </div>
+          <div class="bm-btns">
+            <div class="bm-btn">📄 사전안내문</div>
+            <div class="bm-btn">📝 설문</div>
+            <div class="bm-btn">🍱 식권</div>
+            <div class="bm-btn">🏢 러닝센터</div>
+          </div>
+          <div class="bm-attend">🏛️ 대강당 출결</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-join"></div>
+
+    <!-- STEP 2 -->
+    <div class="step-card fade-up">
+      <div class="step-head">
+        <div class="step-num b">2</div>
+        <div class="step-htxt">[대강당 출결] → PASSCODE 입력</div>
+      </div>
+      <p class="step-desc">대강당 입실 시 담당자가 현장에서 <strong>4자리 PASSCODE</strong>를 안내합니다. 명찰 하단 [대강당 출결] 버튼을 누르고 코드를 입력하면 출결이 완료됩니다.</p>
+      <div class="step-tip">🔢 TEST용 PASSCODE는 <strong>2580</strong>입니다. 아래에서 직접 입력해 보세요.</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="pc-wrap">
+            <div class="pc-title">대강당 출결</div>
+            <div class="pc-sub">담당자에게 안내받은 4자리 패스코드를 입력해주세요</div>
+            <div class="pc-dots">
+              <div class="pc-dot" id="d0"></div><div class="pc-dot" id="d1"></div>
+              <div class="pc-dot" id="d2"></div><div class="pc-dot" id="d3"></div>
+            </div>
+            <div class="pc-display" id="pcDisplay">　　　　</div>
+            <div class="keypad">
+              <button class="key" onclick="ki('1')">1</button>
+              <button class="key" onclick="ki('2')">2</button>
+              <button class="key" onclick="ki('3')">3</button>
+              <button class="key" onclick="ki('4')">4</button>
+              <button class="key" onclick="ki('5')">5</button>
+              <button class="key" onclick="ki('6')">6</button>
+              <button class="key" onclick="ki('7')">7</button>
+              <button class="key" onclick="ki('8')">8</button>
+              <button class="key" onclick="ki('9')">9</button>
+              <button class="key z" onclick="ki('0')">0</button>
+              <button class="key del" onclick="kd()">⌫</button>
+            </div>
+            <button class="kp-submit" onclick="ks()">출결 확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-join"></div>
+
+    <!-- STEP 3 -->
+    <div class="step-card fade-up" id="step3card">
+      <div class="step-head">
+        <div class="step-num g">3</div>
+        <div class="step-htxt">출결 완료 — 초록 뱃지 확인</div>
+      </div>
+      <p class="step-desc">올바른 코드를 입력하면 <strong>출결 완료 팝업</strong>이 표시되고, [대강당 출결] 버튼이 초록 뱃지로 변경됩니다. 출결 시간은 Google Sheet에 자동으로 기록됩니다.</p>
+      <div class="step-tip">✅ 출결 완료 후에는 버튼이 비활성화되어 중복 출결을 방지합니다.</div>
+      <div class="phone">
+        <div class="screen">
+          <div id="sucMock" style="display:none;">
+            <div class="suc-wrap">
+              <div class="suc-icon">✅</div>
+              <div class="suc-title">출결이 완료되었습니다</div>
+              <div class="suc-time" id="sucTime">기록 시각 --:--</div>
+              <div class="suc-badge">✓ 출결완료 <span id="sucTimeBadge">--:--</span></div>
+            </div>
+          </div>
+          <div id="waitMock" class="suc-wait">↑ STEP 2에서 2580을 입력해 보세요</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /panel-2 -->
+
+<div class="footer">
+  <strong>LG Electronics · 교육서비스센터</strong><br>
+  이헌정 사원 ｜ heonjeong.lee@lgepartner.com
+</div>
+
+<script>
+/* ── TAB GROUP ── */
+function switchGroup(idx, btn) {
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tg-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  window.scrollTo({top: document.querySelector('.tab-group-nav').offsetTop - 1, behavior:'smooth'});
+}
+
+
+/* ── PASSCODE ── */
+let pc = '';
+function ki(n) {
+  if (pc.length >= 4) return;
+  pc += n; updatePc();
+  if (pc.length === 4) setTimeout(ks, 280);
+}
+function kd() { pc = pc.slice(0,-1); updatePc(); }
+function updatePc() {
+  document.getElementById('pcDisplay').textContent = pc.padEnd(4,'　');
+  [0,1,2,3].forEach(i => document.getElementById('d'+i).classList.toggle('filled', i < pc.length));
+}
+function ks() {
+  if (pc === '2580') { showSuccess(); return; }
+  if (pc.length === 4) {
+    const d = document.getElementById('pcDisplay');
+    d.style.color = '#c00';
+    setTimeout(() => { d.style.color=''; pc=''; updatePc(); }, 800);
+  }
+}
+function showSuccess() {
+  const now = new Date();
+  const t = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  document.getElementById('waitMock').style.display = 'none';
+  document.getElementById('sucMock').style.display = 'block';
+  document.getElementById('sucTime').textContent = '기록 시각 ' + t;
+  document.getElementById('sucTimeBadge').textContent = t;
+  setTimeout(() => document.getElementById('step3card').scrollIntoView({behavior:'smooth', block:'center'}), 250);
+}
+
+/* ── COPY ── */
+function copyText(el) {
+  navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+    const o = el.textContent;
+    el.textContent = '✓ 복사됨'; el.style.color='var(--green)';
+    setTimeout(() => { el.textContent=o; el.style.color=''; }, 1200);
+  });
+}
+function copyCtaText(el) {
+  navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+    const o = el.textContent;
+    el.textContent = '✓ 복사됨';
+    el.style.background = 'rgba(255,255,255,0.35)';
+    setTimeout(() => { el.textContent=o; el.style.background=''; }, 1200);
+  });
+}
+
+/* ── BUTTON POPUP ── */
+const btnData = {
+  1: { color:'#A50034', chip:'교육 전 필독', title:'📄 사전안내문',
+       desc:'교육 목적·일정·진행 방식·준비물 등 과정 전반의 안내사항이 담겨 있습니다.',
+       items:['교육 목표 및 Why·What·How 안내','일정 및 장소 상세 정보','교육 참가 대상 안내'] },
+  2: { color:'#1a5dbf', chip:'교육 만족도', title:'📝 설문',
+       desc:'교육 종료 후 만족도 설문에 참여할 수 있습니다. 과정 개선에 소중한 의견이 반영됩니다.',
+       items:['과정 전반 만족도 평가','모듈별 학습 효과 피드백','자유의견 작성 가능'] },
+  3: { color:'#c75000', chip:'식당 이용', title:'🍱 식권',
+       desc:'러닝센터 내 식당 이용을 위한 모바일 식권입니다. 별도 종이 식권 없이 화면을 보여주시면 됩니다.',
+       items:['조식·중식·석식 식권 표시','이름·소속·반/팀 자동 표기','식당 입구에서 화면 제시'] },
+  4: { color:'#1a7a4a', chip:'시설 안내', title:'🏢 러닝센터 시설안내',
+       desc:'평택 디지털파크 러닝센터 이용 안내를 확인할 수 있습니다.',
+       items:['강의실·식당·휴게공간 위치','와이파이·출입 정보','생활 안내 (금주·금연 등)'] },
+  5: { color:'#555', chip:'출결 확인', title:'🏛️ 대강당 출결',
+       desc:'대강당 세션 입실 시 4자리 PASSCODE를 입력해 출결을 확인합니다. 대강당 세션이 없는 경우 비활성화됩니다.',
+       items:['담당자가 현장에서 PASSCODE 안내','입력 즉시 Google Sheet에 시간 자동 기록','완료 시 초록 뱃지로 변경'] },
+  6: { color:'#1a5dbf', chip:'IT 지원', title:'💻 실습관련 IT 문의',
+       desc:'<strong style="color:#1a5dbf;">실습 계정이 제공된 과정의 경우에만 학습 로그인 정보와 함께 활성화됩니다.</strong><br><br>실습 중 로그인 오류, 프로그램 설치, 네트워크 문제 등 IT 관련 문의는 담당자에게 Teams 채팅으로 연락해 주세요.',
+       items:['로그인 오류 및 계정 문제','프로그램 설치·실행 오류','네트워크·접속 장애'] },
+};
+function openBtnPopup(n) {
+  const d = btnData[n];
+  document.getElementById('btnPopupContent').innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="width:36px;height:36px;border-radius:50%;background:${d.color};color:white;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${n}</div>
+      <div>
+        <div style="display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:${d.color};color:white;margin-bottom:4px;">${d.chip}</div>
+        <div style="font-size:16px;font-weight:900;">${d.title}</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:#555;line-height:1.75;margin-bottom:14px;">${d.desc}</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      ${d.items.map(i=>`<div style="display:flex;align-items:flex-start;gap:10px;background:#f9f9f9;border-radius:8px;padding:10px 12px;font-size:13px;color:#333;"><span style="color:${d.color};font-size:14px;flex-shrink:0;">✓</span>${i}</div>`).join('')}
+    </div>
+    <button onclick="closeBtnPopup()" style="margin-top:20px;width:100%;background:${d.color};color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;">닫기</button>
+  `;
+  document.getElementById('btnPopupOverlay').style.display = 'block';
+  const popup = document.getElementById('btnPopup');
+  popup.style.display = 'block';
+  requestAnimationFrame(() => {
+    popup.style.transform = 'translate(-50%,-50%) scale(1)';
+    popup.style.opacity = '1';
+  });
+}
+function closeBtnPopup() {
+  const popup = document.getElementById('btnPopup');
+  popup.style.transform = 'translate(-50%,-50%) scale(0.9)';
+  popup.style.opacity = '0';
+  setTimeout(() => {
+    popup.style.display = 'none';
+    document.getElementById('btnPopupOverlay').style.display = 'none';
+  }, 220);
+}
+
+/* ── ACCORDION ── */
+function toggleFeat(el) { el.classList.toggle('open'); }
+
+/* ── SUB PILL 스크롤 하이라이트 ── */
+const groupSections = [
+  ['s-bg','s-ba','s-arch'],
+  ['s-btns','s-theme'],
+  ['s-test','s-how']
+];
+window.addEventListener('scroll', () => {
+  const activePanel = [...document.querySelectorAll('.tab-panel')].findIndex(p => p.classList.contains('active'));
+  if (activePanel < 0) return;
+  const ids = groupSections[activePanel];
+  let cur = 0;
+  ids.forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 140) cur = i;
+  });
+</script>
+</body>
+</html>
