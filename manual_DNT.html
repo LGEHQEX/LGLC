@@ -552,35 +552,61 @@ body { font-family: 'Noto Sans KR', sans-serif; background: #f2f2f2; color: var(
 
   <!-- CTA -->
   <div class="wrap fade-up" id="s-test">
-    <div class="cta-card" style="background:#1a1a1a;">
+    <div class="cta-card" style="background:#2d2d2d;">
       <h3>직접 사용해 보기</h3>
       <p>아래 TEST 정보로 실제 시스템을 체험해 보세요</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:8px;">
         <div class="cta-info" style="margin-bottom:0;">
           <div style="font-size:12px; font-weight:700; opacity:0.5; letter-spacing:0.1em; margin-bottom:6px;">ACCOUNT 1</div>
           <div class="cta-row">
             <span class="l">사번</span>
-            <span class="v cta-copy" onclick="copyCtaText(this)">987654</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">11111</span>
           </div>
           <div class="cta-row">
             <span class="l">PASSCODE</span>
-            <span class="v cta-copy" onclick="copyCtaText(this)">2580</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">1111</span>
+          </div>
+          <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:4px;">
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.8;">본사 교육</span>
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.8;">대강당 ✓</span>
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.8;">실습 ✓</span>
           </div>
         </div>
         <div class="cta-info" style="margin-bottom:0;">
           <div style="font-size:12px; font-weight:700; opacity:0.5; letter-spacing:0.1em; margin-bottom:6px;">ACCOUNT 2</div>
           <div class="cta-row">
             <span class="l">사번</span>
-            <span class="v cta-copy" onclick="copyCtaText(this)">123456</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">22222</span>
           </div>
           <div class="cta-row">
             <span class="l">PASSCODE</span>
-            <span class="v cta-copy" onclick="copyCtaText(this)">1379</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">2222</span>
+          </div>
+          <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:4px;">
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.8;">아카데미 교육</span>
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.8;">대강당 ✓</span>
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.4;">실습 ✗</span>
+          </div>
+        </div>
+        <div class="cta-info" style="margin-bottom:0;">
+          <div style="font-size:12px; font-weight:700; opacity:0.5; letter-spacing:0.1em; margin-bottom:6px;">ACCOUNT 3</div>
+          <div class="cta-row">
+            <span class="l">사번</span>
+            <span class="v cta-copy" onclick="copyCtaText(this)">33333</span>
+          </div>
+          <div class="cta-row">
+            <span class="l">PASSCODE</span>
+            <span class="v" style="font-size:12px; color:rgba(255,255,255,0.4); background:rgba(255,255,255,0.06); padding:6px 10px; border-radius:6px; flex:1;">대강당 모듈 X</span>
+          </div>
+          <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:4px;">
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.8;">세일즈 교육</span>
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.4;">대강당 ✗</span>
+            <span style="font-size:11px; background:rgba(255,255,255,0.12); border-radius:4px; padding:2px 7px; opacity:0.4;">실습 ✗</span>
           </div>
         </div>
       </div>
       <p style="font-size:13px; opacity:0.6; margin-bottom:16px;">💡 값을 탭하면 클립보드에 복사됩니다.</p>
-      <a class="cta-btn" style="color:#1a1a1a;" href="https://lgehqex.github.io/learningcenter/DNT" target="_blank">
+      <a class="cta-btn" style="color:#2d2d2d;" href="https://lgehqex.github.io/learningcenter/DNT" target="_blank">
         🚀 모바일 명찰 접속하기
       </a>
     </div>
@@ -683,7 +709,7 @@ function updatePc() {
   [0,1,2,3].forEach(i => document.getElementById('d'+i).classList.toggle('filled', i < pc.length));
 }
 function ks() {
-  if (pc === '2580' || pc === '1379') { showSuccess(); return; }
+  if (pc === '1111' || pc === '2222') { showSuccess(); return; }
   if (pc.length === 4) {
     const d = document.getElementById('pcDisplay');
     d.style.color = '#c00';
