@@ -286,6 +286,29 @@
     font-size: 12.5px;
   }
 
+  /* ── 문의 카드 ── */
+  .contact-card {
+    background: var(--red);
+    border-radius: 20px;
+    padding: 32px 28px;
+    margin-top: 20px;
+    display: flex; align-items: center; gap: 24px;
+    box-shadow: 0 4px 24px rgba(165,0,52,0.18);
+  }
+  .contact-icon { font-size: 40px; flex-shrink: 0; }
+  .contact-body { flex: 1; }
+  .contact-title { font-size: 17px; font-weight: 700; color: white; margin-bottom: 6px; }
+  .contact-desc { font-size: 13px; color: rgba(255,255,255,0.78); line-height: 1.7; margin-bottom: 14px; }
+  .contact-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: white; color: var(--red);
+    font-size: 13px; font-weight: 700;
+    padding: 10px 20px; border-radius: 30px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .contact-btn:hover { opacity: 0.9; }
+
   @media (max-width: 600px) {
     .hero { padding: 52px 24px 48px; }
     .diagram-flow { flex-direction: column; }
@@ -569,13 +592,28 @@
 
   </div>
 
+  <div class="contact-card">
+    <div class="contact-icon">💬</div>
+    <div class="contact-body">
+      <div class="contact-title">궁금한 점이 있으신가요?</div>
+      <div class="contact-desc">
+        시스템 활용이나 도입과 관련해 문의사항이 있으시면 편하게 연락 주세요.
+      </div>
+      <a class="contact-btn" href="mailto:heonjeong.lee@lgepartner.com">
+        ✉️ &nbsp;heonjeong.lee@lgepartner.com
+      </a>
+    </div>
+  </div>
+
 
 </div>
+
+
 
 <!-- 푸터 -->
 <div class="footer">
   <div class="footer-text">
-    LG Electronics · 교육서비스센터 &nbsp;｜&nbsp; 이헌정 사원 &nbsp;｜&nbsp; <a href="mailto:heonjeong.lee@lgepartner.com">heonjeong.lee@lgepartner.com</a>
+    Biztech On &nbsp;｜&nbsp; HR사업부문 교육운영파트 &nbsp;｜&nbsp; 이헌정 사원
   </div>
 </div>
 
